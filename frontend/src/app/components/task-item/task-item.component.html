@@ -1,24 +1,105 @@
 <div
-  class="my-5 p-6 py-8 border flex items-start justify-between transition-all duration-300 rounded relative {{
+  class="my-5 p-6 py-8 border flex items-start justify-between transition-all duration-300 rounded relative overflow-hidden {{
     finished ? 'opacity-50 bg-gray-200' : ''
-  }} {{ selected ? 'h-[300px]' : 'h-[100px]' }} "
+  }} {{ selected ? 'h-[360px] ' : 'h-[100px]' }} "
 >
   <p *ngIf="!selected; else inputTitle">{{ task.title }}</p>
   <ng-template #inputTitle>
-    <form class="flex flex-col gap-2 w-[80%] transition-all">
-      <input
-        type="text"
-        [(ngModel)]="task.title"
-        class="w-full text-xl font-bold border"
-      />
-      <textarea
-        type="text"
-        [(ngModel)]="task.description"
-        class="w-full text-xl font-bold border"
-      ></textarea>
+    <form
+      [formGroup]="taskForm"
+      (ngSubmit)="updateTask(task.id)"
+      class="flex flex-col gap-4 w-[80%] transition-all"
+    >
+      <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-1">
+          <label class="font-bold">Title</label>
+          <input
+            type="text"
+            class="w-full p-1 rounded border"
+            formControlName="title"
+          />
+        </div>
+        <p
+          class="text-red-500"
+          *ngIf="taskForm.get('title')?.hasError('required')"
+        >
+          Title is required
+        </p>
+        <!-- <p
+          class="text-red-500"
+          *ngIf="this.taskForm.get('title')?.errors?.['required']"
+        >
+          Title is required
+        </p> -->
+        <p
+          class="text-red-500"
+          *ngIf="taskForm.get('title')?.hasError('minlength')"
+        >
+          Min length is 1
+        </p>
+        <p
+          class="text-red-500"
+          *ngIf="taskForm.get('title')?.hasError('maxlength')"
+        >
+          Min length is 20
+        </p>
+      </div>
+      <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-1">
+          <label class="font-bold">Description</label>
+          <textarea
+            type="text"
+            class="w-full p-1 rounded border resize-none h-20"
+            formControlName="description"
+          ></textarea>
+        </div>
+        <p class="text-red-500" *ngIf="taskForm.get('description')?.invalid">
+          Description is required
+        </p>
+        <p
+          class="text-red-500"
+          *ngIf="taskForm.get('description')?.hasError('required')"
+        >
+          Title is required
+        </p>
+        <!-- <p
+        class="text-red-500"
+        *ngIf="this.taskForm.get('title')?.errors?.['required']"
+      >
+        Title is required
+      </p> -->
+        <p
+          class="text-red-500"
+          *ngIf="taskForm.get('description')?.hasError('minlength')"
+        >
+          Min length is 1
+        </p>
+        <p
+          class="text-red-500"
+          *ngIf="taskForm.get('description')?.hasError('maxlength')"
+        >
+          Min length is 50
+        </p>
+      </div>
       <p>Created {{ task.createdAt | date : "dd/mm/yyyy" }}</p>
+      <div class="flex gap-2 text-white">
+        <button
+          class="p-1 px-3 rounded bg-blue-400 shadow hover:bg-black text-white transition-all"
+          type="submit"
+        >
+          Edit
+        </button>
+        <button
+          type="button"
+          class="p-1 px-3 rounded bg-red-400 shadow hover:bg-black text-white transition-all"
+          (click)="selectTask(task.id)"
+        >
+          Close
+        </button>
+      </div>
     </form>
   </ng-template>
+
   <div
     class="absolute cursor-pointer bottom-2 w-full flex justify-center"
     (click)="selectTask(task.id)"

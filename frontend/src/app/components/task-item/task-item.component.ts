@@ -8,8 +8,13 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Task } from 'src/app/models/Task';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Task, TaskUpdateDTO } from 'src/app/models/Task';
+import {
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'task-item',
@@ -18,8 +23,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   templateUrl: './task-item.component.html',
   styleUrls: ['./task-item.component.scss'],
 })
-export class TaskItemComponent implements OnChanges {
-  constructor() {}
+export class TaskItemComponent implements OnChanges, OnInit {
+  constructor(private fb: FormBuilder) {}
+
   @Input() task: Task = {
     id: 0,
     title: '',
@@ -38,6 +44,24 @@ export class TaskItemComponent implements OnChanges {
   @Output() finishOrUnfinishTaskEvent = new EventEmitter<number>();
   @Output() selectTaskEvent = new EventEmitter<number>();
 
+  taskForm = this.fb.group({
+    title: [
+      '',
+      [Validators.required, Validators.minLength(2), Validators.maxLength(20)],
+    ],
+    description: [
+      '',
+      [Validators.required, Validators.minLength(1), Validators.maxLength(50)],
+    ],
+  });
+
+  ngOnInit(): void {
+    this.taskForm.setValue({
+      title: this.task.title,
+      description: this.task.description,
+    });
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     this.finished = this.task.finished;
     if (this.selectedTask === null || this.selectedTask.id == 0) {
@@ -53,6 +77,10 @@ export class TaskItemComponent implements OnChanges {
   selectTask(id: number) {
     this.selected = !this.selected;
     if (this.selectedTask?.id === id) {
+      this.taskForm.setValue({
+        title: this.task.title,
+        description: this.task.description,
+      });
       this.selectTaskEvent.emit(0);
       return;
     }
@@ -64,5 +92,17 @@ export class TaskItemComponent implements OnChanges {
     setTimeout(() => {
       this.finishOrUnfinishTaskEvent.emit(id);
     }, 300);
+  }
+
+  updateTask(id: number) {
+    if (this.taskForm.invalid) return;
+
+    const taskUpdated: TaskUpdateDTO = {
+      id: id,
+      title: this.taskForm.value.title!,
+      description: this.taskForm.value.description!,
+      finished: this.task.finished,
+    };
+    console.log(taskUpdated, this.taskForm.value, this.taskForm.invalid);
   }
 }
