@@ -4,12 +4,18 @@ import { TaskActions } from './tasks.actions';
 
 export interface TaskState {
   allTasks: Task[];
-  selectedTask: Task | null;
+  selectedTask: Task;
 }
 
 export const initialState: TaskState = {
   allTasks: [],
-  selectedTask: null,
+  selectedTask: {
+    id: 0,
+    title: '',
+    description: '',
+    finished: false,
+    createdAt: new Date(),
+  },
 };
 
 export const tasksReducer = createReducer(
@@ -49,7 +55,13 @@ export const tasksReducer = createReducer(
   on(TaskActions.selectTask, (state, { taskId }) => {
     return {
       ...state,
-      selectedTask: state.allTasks.find((t) => t.id === taskId) || null,
+      selectedTask: state.allTasks.find((t) => t.id === taskId) || {
+        id: 0,
+        title: '',
+        description: '',
+        finished: false,
+        createdAt: new Date(),
+      },
     };
   })
 );

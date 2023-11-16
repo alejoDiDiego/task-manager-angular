@@ -6,6 +6,7 @@
       [task]="task"
       [selectedTask]="selectedTask$ | async"
       (finishOrUnfinishTaskEvent)="finishOrUnfinishTask($event)"
+      (selectTaskEvent)="selectTask($event)"
     />
   </div>
 </div>

@@ -25,5 +25,8 @@ export class HomeComponent {
   finishOrUnfinishTask(id: number) {
     this.store.dispatch(TaskActions.finishOrUnfinishTask({ taskId: id }));
   }
+  selectTask(id: number) {
+    this.store.dispatch(TaskActions.selectTask({ taskId: id }));
+  }
   constructor(private store: Store<AppStateInterface>) {}
 }

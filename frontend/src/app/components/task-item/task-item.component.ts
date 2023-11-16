@@ -5,6 +5,7 @@ import {
   OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Task } from 'src/app/models/Task';
@@ -17,7 +18,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './task-item.component.html',
   styleUrls: ['./task-item.component.scss'],
 })
-export class TaskItemComponent implements OnInit {
+export class TaskItemComponent implements OnChanges {
   constructor() {}
   @Input() task: Task = {
     id: 0,
@@ -35,17 +36,27 @@ export class TaskItemComponent implements OnInit {
   };
 
   @Output() finishOrUnfinishTaskEvent = new EventEmitter<number>();
+  @Output() selectTaskEvent = new EventEmitter<number>();
 
-  finished: boolean = false;
-  selected: boolean = false;
-
-  ngOnInit(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.finished = this.task.finished;
-    if (this.selectedTask === null) {
+    if (this.selectedTask === null || this.selectedTask.id == 0) {
       this.selected = false;
       return;
     }
     this.selected = this.task.id === this.selectedTask.id;
+  }
+
+  finished: boolean = false;
+  selected: boolean = false;
+
+  selectTask(id: number) {
+    this.selected = !this.selected;
+    if (this.selectedTask?.id === id) {
+      this.selectTaskEvent.emit(0);
+      return;
+    }
+    this.selectTaskEvent.emit(id);
   }
 
   finishOrUnfinishTask(id: number) {

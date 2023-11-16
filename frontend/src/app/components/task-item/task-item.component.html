@@ -1,9 +1,20 @@
 <div
-  class="my-5 p-5 border flex justify-between transition-all duration-300 rounded {{
+  class="my-5 p-6 py-8 border flex items-start justify-between transition-all duration-300 rounded relative {{
     finished ? 'opacity-50 bg-gray-200' : ''
-  }} {{ selected ? 'p-10' : 'cursor-pointer' }} "
+  }} {{ selected ? 'h-[200px]' : 'h-[100px]' }} "
 >
   <p>{{ task.title }}</p>
+  <div
+    class="absolute cursor-pointer bottom-2 w-full flex justify-center"
+    (click)="selectTask(task.id)"
+  >
+    <img
+      class="w-4 cursor-pointer {{
+        selected ? 'rotate-180' : ''
+      }} transition-all duration-300"
+      src="/src/assets/arrow-down-sign-to-navigate.png"
+    />
+  </div>
   <div class="flex gap-3 items-center">
     <input
       type="checkbox"
