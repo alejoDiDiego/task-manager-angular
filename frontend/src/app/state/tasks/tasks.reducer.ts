@@ -37,6 +37,15 @@ export const tasksReducer = createReducer(
       allTasks: state.allTasks.filter((t) => t.id !== taskId),
     };
   }),
+  on(TaskActions.finishOrUnfinishTask, (state, { taskId }) => {
+    const index = state.allTasks.findIndex((t) => t.id === taskId);
+    const newTasks = [...state.allTasks];
+    newTasks[index] = {
+      ...state.allTasks[index],
+      finished: !newTasks[index].finished,
+    };
+    return { ...state, allTasks: newTasks };
+  }),
   on(TaskActions.selectTask, (state, { taskId }) => {
     return {
       ...state,

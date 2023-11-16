@@ -1,0 +1,19 @@
+<div
+  class="my-5 p-5 border flex justify-between transition-all duration-300 {{
+    task.finished ? 'opacity-50' : ''
+  }}"
+>
+  <p>{{ task.title }}</p>
+  <div class="flex gap-3 items-center">
+    <input
+      type="checkbox"
+      [ngModel]="task.finished"
+      (change)="finishOrUnfinishTask(task.id)"
+      class="w-6 h-6 cursor-pointer"
+    />
+    <img
+      class="w-6 opacity-100 transition-all hover:opacity-60 cursor-pointer"
+      src="/src/assets/remove.png"
+    />
+  </div>
+</div>

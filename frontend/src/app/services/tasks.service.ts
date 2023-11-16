@@ -19,7 +19,7 @@ export class TasksService {
         id: 2,
         title: 'Second task',
         description: 'This is the second task',
-        finished: false,
+        finished: true,
         createdAt: new Date(),
       },
       {
