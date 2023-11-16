@@ -3,41 +3,44 @@ import { Task } from 'src/app/models/Task';
 import { TaskActions } from './tasks.actions';
 
 export interface TaskState {
-  tasks: Task[];
+  allTasks: Task[];
   selectedTask: Task | null;
 }
 
 export const initialState: TaskState = {
-  tasks: [],
+  allTasks: [],
   selectedTask: null,
 };
 
 export const tasksReducer = createReducer(
   initialState,
   on(TaskActions.getTasks, (state, { tasks }) => {
-    return { ...state, tasks };
+    return { ...state, allTasks: tasks };
   }),
   on(TaskActions.createTask, (state, { task }) => {
     const newTask: Task = {
       ...task,
-      id: state.tasks.length + 1,
+      id: state.allTasks.length + 1,
       createdAt: new Date(),
     };
-    return { ...state, tasks: [...state.tasks, newTask] };
+    return { ...state, tasks: [...state.allTasks, newTask] };
   }),
   on(TaskActions.editTask, (state, { task }) => {
-    const index = state.tasks.findIndex((t) => t.id === task.id);
-    const newTasks = [...state.tasks];
-    newTasks[index] = { ...task, createdAt: state.tasks[index].createdAt };
-    return { ...state, tasks: newTasks };
+    const index = state.allTasks.findIndex((t) => t.id === task.id);
+    const newTasks = [...state.allTasks];
+    newTasks[index] = { ...task, createdAt: state.allTasks[index].createdAt };
+    return { ...state, allTasks: newTasks };
   }),
   on(TaskActions.removeTask, (state, { taskId }) => {
-    return { ...state, tasks: state.tasks.filter((t) => t.id !== taskId) };
+    return {
+      ...state,
+      allTasks: state.allTasks.filter((t) => t.id !== taskId),
+    };
   }),
   on(TaskActions.selectTask, (state, { taskId }) => {
     return {
       ...state,
-      selectedTask: state.tasks.find((t) => t.id === taskId) || null,
+      selectedTask: state.allTasks.find((t) => t.id === taskId) || null,
     };
   })
 );

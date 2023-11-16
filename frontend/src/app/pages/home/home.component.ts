@@ -30,10 +30,5 @@ export class HomeComponent implements OnInit {
   ) {
     // this.tasks$ = this.store.select(tasksSelector);
     this.tasks$ = this.store.select(tasksSelector);
-
-    this.store.select(tasksSelector).subscribe((tasks) => {
-      console.log(tasks);
-      // this.tasks = tasks;
-    });
   }
 }
