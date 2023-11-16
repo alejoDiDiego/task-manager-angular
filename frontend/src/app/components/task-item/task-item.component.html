@@ -1,14 +1,14 @@
 <div
-  class="my-5 p-5 border flex justify-between transition-all duration-300 {{
-    task.finished ? 'opacity-50' : ''
-  }}"
+  class="my-5 p-5 border flex justify-between transition-all duration-300 rounded {{
+    finished ? 'opacity-50 bg-gray-200' : ''
+  }} {{ selected ? 'p-10' : 'cursor-pointer' }} "
 >
   <p>{{ task.title }}</p>
   <div class="flex gap-3 items-center">
     <input
       type="checkbox"
-      [ngModel]="task.finished"
-      (change)="finishOrUnfinishTask(task.id)"
+      [ngModel]="finished"
+      (ngModelChange)="finishOrUnfinishTask(task.id)"
       class="w-6 h-6 cursor-pointer"
     />
     <img

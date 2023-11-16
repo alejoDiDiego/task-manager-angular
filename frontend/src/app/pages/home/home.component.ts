@@ -16,12 +16,14 @@ import { TaskActions } from 'src/app/state/tasks/tasks.actions';
   imports: [CommonModule, TaskItemComponent],
 })
 export class HomeComponent {
-  tasks$: Observable<Task[]>;
+  tasks$: Observable<Task[]> = this.store.select(tasksSelector);
+  selectedTask$: Observable<Task | null> = this.store.select(
+    (state: AppStateInterface) => state.tasks.selectedTask
+  );
+
   tasks: Task[] = [];
   finishOrUnfinishTask(id: number) {
     this.store.dispatch(TaskActions.finishOrUnfinishTask({ taskId: id }));
   }
-  constructor(private store: Store<AppStateInterface>) {
-    this.tasks$ = this.store.select(tasksSelector);
-  }
+  constructor(private store: Store<AppStateInterface>) {}
 }

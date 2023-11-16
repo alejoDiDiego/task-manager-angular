@@ -4,6 +4,7 @@
     <task-item
       *ngFor="let task of tasks$ | async"
       [task]="task"
+      [selectedTask]="selectedTask$ | async"
       (finishOrUnfinishTaskEvent)="finishOrUnfinishTask($event)"
     />
   </div>
