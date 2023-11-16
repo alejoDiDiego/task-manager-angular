@@ -9,12 +9,12 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Task } from 'src/app/models/Task';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'task-item',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './task-item.component.html',
   styleUrls: ['./task-item.component.scss'],
 })

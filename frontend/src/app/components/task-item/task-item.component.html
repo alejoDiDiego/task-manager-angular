@@ -1,9 +1,24 @@
 <div
   class="my-5 p-6 py-8 border flex items-start justify-between transition-all duration-300 rounded relative {{
     finished ? 'opacity-50 bg-gray-200' : ''
-  }} {{ selected ? 'h-[200px]' : 'h-[100px]' }} "
+  }} {{ selected ? 'h-[300px]' : 'h-[100px]' }} "
 >
-  <p>{{ task.title }}</p>
+  <p *ngIf="!selected; else inputTitle">{{ task.title }}</p>
+  <ng-template #inputTitle>
+    <form class="flex flex-col gap-2 w-[80%] transition-all">
+      <input
+        type="text"
+        [(ngModel)]="task.title"
+        class="w-full text-xl font-bold border"
+      />
+      <textarea
+        type="text"
+        [(ngModel)]="task.description"
+        class="w-full text-xl font-bold border"
+      ></textarea>
+      <p>Created {{ task.createdAt | date : "dd/mm/yyyy" }}</p>
+    </form>
+  </ng-template>
   <div
     class="absolute cursor-pointer bottom-2 w-full flex justify-center"
     (click)="selectTask(task.id)"
