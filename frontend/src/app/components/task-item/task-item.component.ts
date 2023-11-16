@@ -43,6 +43,7 @@ export class TaskItemComponent implements OnChanges, OnInit {
 
   @Output() finishOrUnfinishTaskEvent = new EventEmitter<number>();
   @Output() selectTaskEvent = new EventEmitter<number>();
+  @Output() updateTaskEvent = new EventEmitter<TaskUpdateDTO>();
 
   taskForm = this.fb.group({
     title: [
@@ -104,5 +105,6 @@ export class TaskItemComponent implements OnChanges, OnInit {
       finished: this.task.finished,
     };
     console.log(taskUpdated, this.taskForm.value, this.taskForm.invalid);
+    this.updateTaskEvent.emit(taskUpdated);
   }
 }

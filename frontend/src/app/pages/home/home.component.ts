@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { tasksSelector } from 'src/app/state/tasks/tasks.selectors';
 import { Observable } from 'rxjs';
-import { Task } from 'src/app/models/Task';
+import { Task, TaskUpdateDTO } from 'src/app/models/Task';
 import { AppStateInterface } from 'src/app/state/app.state';
 import { TaskItemComponent } from '../../components/task-item/task-item.component';
 import { TaskActions } from 'src/app/state/tasks/tasks.actions';
@@ -27,6 +27,9 @@ export class HomeComponent {
   }
   selectTask(id: number) {
     this.store.dispatch(TaskActions.selectTask({ taskId: id }));
+  }
+  updateTask(task: TaskUpdateDTO) {
+    this.store.dispatch(TaskActions.editTask({ task: task }));
   }
   constructor(private store: Store<AppStateInterface>) {}
 }
