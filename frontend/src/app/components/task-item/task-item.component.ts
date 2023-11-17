@@ -105,6 +105,10 @@ export class TaskItemComponent implements OnChanges, OnInit {
       finished: this.task.finished,
     };
     console.log(taskUpdated, this.taskForm.value, this.taskForm.invalid);
-    this.updateTaskEvent.emit(taskUpdated);
+
+    this.selectTask(id);
+    setTimeout(() => {
+      this.updateTaskEvent.emit(taskUpdated);
+    }, 300);
   }
 }
