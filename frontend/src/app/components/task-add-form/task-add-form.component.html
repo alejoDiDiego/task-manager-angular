@@ -1,0 +1,131 @@
+<div class="flex flex-col items-center gap-3">
+  <button
+    (click)="toggleOpen()"
+    class="p-2 border-2 rounded font-bold shadow transition-all {{
+      openned
+        ? 'border-red-300 hover:bg-red-300'
+        : 'border-blue-300 hover:bg-blue-300'
+    }}"
+  >
+    {{ openned ? "Cancel" : "Add task" }}
+  </button>
+  <div class="overflow-hidden w-full">
+    <form
+      class="transition-all duration-300 w-full overflow-hidden   {{
+        openned ? 'h-[350px] border rounded ' : 'h-0'
+      }}"
+      [formGroup]="taskForm"
+      (ngSubmit)="createTask()"
+    >
+      <div class="flex flex-col gap-4 p-6 py-8">
+        <div class="flex flex-col gap-2">
+          <div class="flex flex-col gap-1">
+            <label class="font-bold">Title</label>
+            <input
+              type="text"
+              class="w-full p-1 rounded border"
+              formControlName="title"
+            />
+          </div>
+          <p
+            class="text-red-500"
+            *ngIf="
+              taskForm.get('title')?.hasError('required') &&
+              (taskForm.get('title')?.touched ||
+                taskForm.get('title')?.dirty ||
+                isSubmitted)
+            "
+          >
+            Title is required
+          </p>
+          <!-- <p
+    class="text-red-500"
+    *ngIf="this.taskForm.get('title')?.errors?.['required']"
+  >
+    Title is required
+  </p> -->
+          <p
+            class="text-red-500"
+            *ngIf="
+              taskForm.get('title')?.hasError('minlength') &&
+              (taskForm.get('title')?.touched ||
+                taskForm.get('title')?.dirty ||
+                isSubmitted)
+            "
+          >
+            Min length is 1
+          </p>
+          <p
+            class="text-red-500"
+            *ngIf="
+              taskForm.get('title')?.hasError('maxlength') &&
+              (taskForm.get('title')?.touched ||
+                taskForm.get('title')?.dirty ||
+                isSubmitted)
+            "
+          >
+            Min length is 20
+          </p>
+        </div>
+        <div class="flex flex-col gap-2">
+          <div class="flex flex-col gap-1">
+            <label class="font-bold">Description</label>
+            <textarea
+              type="text"
+              class="w-full p-1 rounded border resize-none h-20"
+              formControlName="description"
+            ></textarea>
+          </div>
+          <p
+            class="text-red-500"
+            *ngIf="
+              taskForm.get('description')?.hasError('required') &&
+              (taskForm.get('description')?.touched ||
+                taskForm.get('description')?.dirty ||
+                isSubmitted)
+            "
+          >
+            Description is required
+          </p>
+          <p
+            class="text-red-500"
+            *ngIf="
+              taskForm.get('description')?.hasError('minlength') &&
+              (taskForm.get('description')?.touched ||
+                taskForm.get('description')?.dirty ||
+                isSubmitted)
+            "
+          >
+            Min length is 1
+          </p>
+          <p
+            class="text-red-500"
+            *ngIf="
+              taskForm.get('description')?.hasError('maxlength') &&
+              (taskForm.get('description')?.touched ||
+                taskForm.get('description')?.dirty ||
+                isSubmitted)
+            "
+          >
+            Min length is 50
+          </p>
+        </div>
+        <div class="flex gap-2 text-white">
+          <button
+            class="p-1 px-3 rounded bg-blue-400 shadow hover:bg-black text-white transition-all"
+            type="submit"
+          >
+            Add
+          </button>
+          <button
+            type="button"
+            class="p-1 px-3 rounded bg-red-400 shadow hover:bg-black text-white transition-all"
+            (click)="toggleOpen()"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

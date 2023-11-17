@@ -26,10 +26,15 @@ export const tasksReducer = createReducer(
   on(TaskActions.createTask, (state, { task }) => {
     const newTask: Task = {
       ...task,
+      finished: false,
       id: state.allTasks.length + 1,
       createdAt: new Date(),
     };
-    return { ...state, tasks: [...state.allTasks, newTask] };
+    return {
+      ...state,
+      allTasks: [...state.allTasks, newTask],
+      selectedTask: newTask,
+    };
   }),
   on(TaskActions.editTask, (state, { task }) => {
     const index = state.allTasks.findIndex((t) => t.id === task.id);

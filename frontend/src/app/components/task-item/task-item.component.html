@@ -58,18 +58,6 @@
         </p>
         <p
           class="text-red-500"
-          *ngIf="taskForm.get('description')?.hasError('required')"
-        >
-          Title is required
-        </p>
-        <!-- <p
-        class="text-red-500"
-        *ngIf="this.taskForm.get('title')?.errors?.['required']"
-      >
-        Title is required
-      </p> -->
-        <p
-          class="text-red-500"
           *ngIf="taskForm.get('description')?.hasError('minlength')"
         >
           Min length is 1
@@ -81,7 +69,7 @@
           Min length is 50
         </p>
       </div>
-      <p>Created {{ task.createdAt | date : "dd/mm/yyyy" }}</p>
+      <p>Created {{ task.createdAt | date : "dd/MM/yyyy" }}</p>
       <div class="flex gap-2 text-white">
         <button
           class="p-1 px-3 rounded bg-blue-400 shadow hover:bg-black text-white transition-all"

@@ -20,6 +20,5 @@ export class LayoutComponent {
     this.store.dispatch(
       TaskActions.getTasks({ tasks: this.tasksService.getTasks() })
     );
-    this.store.dispatch(TaskActions.selectTask({ taskId: 1 }));
   }
 }

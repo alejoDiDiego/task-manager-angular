@@ -6,6 +6,7 @@ export interface Task {
   createdAt: Date;
 }
 
-export interface TaskCreateDTO extends Omit<Task, 'id' | 'createdAt'> {}
+export interface TaskCreateDTO
+  extends Omit<Task, 'id' | 'createdAt' | 'finished'> {}
 
 export interface TaskUpdateDTO extends Omit<Task, 'createdAt'> {}
