@@ -1,6 +1,7 @@
 <div class="flex flex-col gap-2 justify-center items-center">
-  <h1 class="font-bold text-4xl">Create new task</h1>
-  <div class="shadow-md border border-gray-200 w-full max-w-[500px] p-5">
+  <div
+    class="shadow-md border border-gray-200 w-full max-h-[70vh] md:max-h-[80vh] overflow-y-auto max-w-[500px] p-5"
+  >
     <task-add-form (createTaskEvent)="createTask($event)" />
     <task-item
       *ngFor="let task of tasks$ | async"
