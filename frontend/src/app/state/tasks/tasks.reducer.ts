@@ -10,7 +10,7 @@ export interface TaskState {
 export const initialState: TaskState = {
   allTasks: [],
   selectedTask: {
-    id: 0,
+    id: '',
     title: '',
     description: '',
     finished: false,
@@ -30,7 +30,7 @@ export const tasksReducer = createReducer(
     const newTask: Task = {
       ...task,
       finished: false,
-      id: state.allTasks.length + 1,
+      id: crypto.randomUUID(),
       createdAt: new Date(),
     };
     const localTasks = localStorage.getItem('tasks');
@@ -74,7 +74,7 @@ export const tasksReducer = createReducer(
     return {
       ...state,
       selectedTask: state.allTasks.find((t) => t.id === taskId) || {
-        id: 0,
+        id: '',
         title: '',
         description: '',
         finished: false,

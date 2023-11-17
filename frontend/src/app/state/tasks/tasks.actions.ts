@@ -7,8 +7,8 @@ export const TaskActions = createActionGroup({
     'Get Tasks': emptyProps(),
     'Create Task': props<{ task: TaskCreateDTO }>(),
     'Edit Task': props<{ task: TaskUpdateDTO }>(),
-    'Remove Task': props<{ taskId: number }>(),
-    'Finish Or Unfinish Task': props<{ taskId: number }>(),
-    'Select Task': props<{ taskId: number }>(),
+    'Remove Task': props<{ taskId: string }>(),
+    'Finish Or Unfinish Task': props<{ taskId: string }>(),
+    'Select Task': props<{ taskId: string }>(),
   },
 });

@@ -23,10 +23,10 @@ export class HomeComponent {
   );
 
   tasks: Task[] = [];
-  finishOrUnfinishTask(id: number) {
+  finishOrUnfinishTask(id: string) {
     this.store.dispatch(TaskActions.finishOrUnfinishTask({ taskId: id }));
   }
-  selectTask(id: number) {
+  selectTask(id: string) {
     this.store.dispatch(TaskActions.selectTask({ taskId: id }));
   }
   updateTask(task: TaskUpdateDTO) {
@@ -37,7 +37,7 @@ export class HomeComponent {
     this.store.dispatch(TaskActions.createTask({ task: task }));
     this.tasks$.subscribe((tasks) => console.log(tasks));
   }
-  deleteTask(id: number) {
+  deleteTask(id: string) {
     this.store.dispatch(TaskActions.removeTask({ taskId: id }));
   }
   constructor(private store: Store<AppStateInterface>) {}

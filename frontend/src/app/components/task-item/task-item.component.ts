@@ -27,24 +27,24 @@ export class TaskItemComponent implements OnChanges, OnInit {
   constructor(private fb: FormBuilder) {}
 
   @Input() task: Task = {
-    id: 0,
+    id: '',
     title: '',
     description: '',
     finished: false,
     createdAt: new Date(),
   };
   @Input() selectedTask: Task | null = {
-    id: 0,
+    id: '',
     title: '',
     description: '',
     finished: false,
     createdAt: new Date(),
   };
 
-  @Output() finishOrUnfinishTaskEvent = new EventEmitter<number>();
-  @Output() selectTaskEvent = new EventEmitter<number>();
+  @Output() finishOrUnfinishTaskEvent = new EventEmitter<string>();
+  @Output() selectTaskEvent = new EventEmitter<string>();
   @Output() updateTaskEvent = new EventEmitter<TaskUpdateDTO>();
-  @Output() deleteTaskEvent = new EventEmitter<number>();
+  @Output() deleteTaskEvent = new EventEmitter<string>();
 
   taskForm = this.fb.group({
     title: [
@@ -66,7 +66,7 @@ export class TaskItemComponent implements OnChanges, OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.finished = this.task.finished;
-    if (this.selectedTask === null || this.selectedTask.id == 0) {
+    if (this.selectedTask === null || this.selectedTask.id == '') {
       this.selected = false;
       return;
     }
@@ -76,27 +76,27 @@ export class TaskItemComponent implements OnChanges, OnInit {
   finished: boolean = false;
   selected: boolean = false;
 
-  selectTask(id: number) {
+  selectTask(id: string) {
     this.selected = !this.selected;
     if (this.selectedTask?.id === id) {
       this.taskForm.setValue({
         title: this.task.title,
         description: this.task.description,
       });
-      this.selectTaskEvent.emit(0);
+      this.selectTaskEvent.emit('');
       return;
     }
     this.selectTaskEvent.emit(id);
   }
 
-  finishOrUnfinishTask(id: number) {
+  finishOrUnfinishTask(id: string) {
     this.finished = !this.finished;
     setTimeout(() => {
       this.finishOrUnfinishTaskEvent.emit(id);
     }, 300);
   }
 
-  updateTask(id: number) {
+  updateTask(id: string) {
     if (this.taskForm.invalid) return;
 
     const taskUpdated: TaskUpdateDTO = {
@@ -115,10 +115,10 @@ export class TaskItemComponent implements OnChanges, OnInit {
 
   deleting: boolean = false;
 
-  deleteTask(id: number) {
+  deleteTask(id: string) {
     this.deleting = true;
     setTimeout(() => {
-      this.selectTaskEvent.emit(0);
+      this.selectTaskEvent.emit('');
       this.deleteTaskEvent.emit(id);
     }, 300);
   }

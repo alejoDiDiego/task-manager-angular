@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppStateInterface } from 'src/app/state/app.state';
-import { TasksService } from 'src/app/services/tasks.service';
 import { TaskActions } from 'src/app/state/tasks/tasks.actions';
 @Component({
   selector: 'app-layout',
@@ -13,10 +12,7 @@ import { TaskActions } from 'src/app/state/tasks/tasks.actions';
   styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent {
-  constructor(
-    private store: Store<AppStateInterface>,
-    private tasksService: TasksService
-  ) {
+  constructor(private store: Store<AppStateInterface>) {
     this.store.dispatch(TaskActions.getTasks());
   }
 }
