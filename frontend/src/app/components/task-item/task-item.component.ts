@@ -44,11 +44,12 @@ export class TaskItemComponent implements OnChanges, OnInit {
   @Output() finishOrUnfinishTaskEvent = new EventEmitter<number>();
   @Output() selectTaskEvent = new EventEmitter<number>();
   @Output() updateTaskEvent = new EventEmitter<TaskUpdateDTO>();
+  @Output() deleteTaskEvent = new EventEmitter<number>();
 
   taskForm = this.fb.group({
     title: [
       '',
-      [Validators.required, Validators.minLength(2), Validators.maxLength(20)],
+      [Validators.required, Validators.minLength(1), Validators.maxLength(20)],
     ],
     description: [
       '',
@@ -109,6 +110,16 @@ export class TaskItemComponent implements OnChanges, OnInit {
     this.selectTask(id);
     setTimeout(() => {
       this.updateTaskEvent.emit(taskUpdated);
+    }, 300);
+  }
+
+  deleting: boolean = false;
+
+  deleteTask(id: number) {
+    this.deleting = true;
+    setTimeout(() => {
+      this.selectTaskEvent.emit(0);
+      this.deleteTaskEvent.emit(id);
     }, 300);
   }
 }

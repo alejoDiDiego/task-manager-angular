@@ -37,5 +37,8 @@ export class HomeComponent {
     this.store.dispatch(TaskActions.createTask({ task: task }));
     this.tasks$.subscribe((tasks) => console.log(tasks));
   }
+  deleteTask(id: number) {
+    this.store.dispatch(TaskActions.removeTask({ taskId: id }));
+  }
   constructor(private store: Store<AppStateInterface>) {}
 }

@@ -20,8 +20,11 @@ export const initialState: TaskState = {
 
 export const tasksReducer = createReducer(
   initialState,
-  on(TaskActions.getTasks, (state, { tasks }) => {
-    return { ...state, allTasks: tasks };
+  on(TaskActions.getTasks, (state) => {
+    const localTasks = localStorage.getItem('tasks');
+    const tasksParsed: Task[] = localTasks ? JSON.parse(localTasks) : [];
+    console.log(tasksParsed);
+    return { ...state, allTasks: tasksParsed };
   }),
   on(TaskActions.createTask, (state, { task }) => {
     const newTask: Task = {
@@ -30,6 +33,10 @@ export const tasksReducer = createReducer(
       id: state.allTasks.length + 1,
       createdAt: new Date(),
     };
+    const localTasks = localStorage.getItem('tasks');
+    const tasksParsed: Task[] = localTasks ? JSON.parse(localTasks) : [];
+    tasksParsed.push(newTask);
+    localStorage.setItem('tasks', JSON.stringify(tasksParsed));
     return {
       ...state,
       allTasks: [...state.allTasks, newTask],
@@ -40,12 +47,17 @@ export const tasksReducer = createReducer(
     const index = state.allTasks.findIndex((t) => t.id === task.id);
     const newTasks = [...state.allTasks];
     newTasks[index] = { ...task, createdAt: state.allTasks[index].createdAt };
+    localStorage.setItem('tasks', JSON.stringify(newTasks));
     return { ...state, allTasks: newTasks };
   }),
   on(TaskActions.removeTask, (state, { taskId }) => {
+    const localTasks = localStorage.getItem('tasks');
+    const tasksParsed: Task[] = localTasks ? JSON.parse(localTasks) : [];
+    const newTasks = tasksParsed.filter((t) => t.id !== taskId);
+    localStorage.setItem('tasks', JSON.stringify(newTasks));
     return {
       ...state,
-      allTasks: state.allTasks.filter((t) => t.id !== taskId),
+      allTasks: newTasks,
     };
   }),
   on(TaskActions.finishOrUnfinishTask, (state, { taskId }) => {
@@ -55,6 +67,7 @@ export const tasksReducer = createReducer(
       ...state.allTasks[index],
       finished: !newTasks[index].finished,
     };
+    localStorage.setItem('tasks', JSON.stringify(newTasks));
     return { ...state, allTasks: newTasks };
   }),
   on(TaskActions.selectTask, (state, { taskId }) => {
