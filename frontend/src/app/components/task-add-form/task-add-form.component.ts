@@ -42,6 +42,7 @@ export class TaskAddFormComponent {
 
   createTask() {
     this.isSubmitted = true;
+    if (this.taskForm.invalid) return;
     const task: TaskCreateDTO = {
       description: this.taskForm.value.description!,
       title: this.taskForm.value.title!,

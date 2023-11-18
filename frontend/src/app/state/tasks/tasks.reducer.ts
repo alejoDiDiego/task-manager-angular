@@ -23,7 +23,6 @@ export const tasksReducer = createReducer(
   on(TaskActions.getTasks, (state) => {
     const localTasks = localStorage.getItem('tasks');
     const tasksParsed: Task[] = localTasks ? JSON.parse(localTasks) : [];
-    console.log(tasksParsed);
     return { ...state, allTasks: tasksParsed };
   }),
   on(TaskActions.createTask, (state, { task }) => {

@@ -1,14 +1,12 @@
 <div
-  class="my-5 p-6 py-8 border flex items-start justify-between transition-all duration-300 rounded relative overflow-hidden  {{
-    finished ? 'opacity-50 bg-gray-200' : ''
-  }}
-
+  class=" p-6 border flex items-start justify-between transition-all duration-300 rounded relative overflow-hidden
+  {{ finished ? 'opacity-50 bg-gray-200' : '' }}
   {{
     deleting
       ? 'h-0 overflow-hidden my-0  py-0 border-transparent border-0'
       : selected
-      ? 'h-[360px]'
-      : 'h-[100px]'
+      ? 'h-[400px] py-8 my-5'
+      : 'h-[100px] py-8 my-5'
   }}
   "
 >

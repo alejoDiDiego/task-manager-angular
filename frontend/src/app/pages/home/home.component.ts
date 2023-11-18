@@ -31,11 +31,9 @@ export class HomeComponent {
   }
   updateTask(task: TaskUpdateDTO) {
     this.store.dispatch(TaskActions.editTask({ task: task }));
-    this.tasks$.subscribe((tasks) => console.log(tasks));
   }
   createTask(task: TaskCreateDTO) {
     this.store.dispatch(TaskActions.createTask({ task: task }));
-    this.tasks$.subscribe((tasks) => console.log(tasks));
   }
   deleteTask(id: string) {
     this.store.dispatch(TaskActions.removeTask({ taskId: id }));
